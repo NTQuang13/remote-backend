@@ -7,7 +7,13 @@ resource "aws_instance" "web" {
   }
 }
 
-resource "aws_ebs_volume" "web_volume" {
-  availability_zone = "ap-southeast-1a"
+resource "aws_ebs_volume" "ebs-exten" {
+  availability_zone = "ap-southeast-1c"
   size              = 8
+}
+
+resource "aws_volume_attachment" "ebs_attach" {
+  device_name = "/dev/sdh"
+  volume_id   = aws_ebs_volume.ebs-exten.id
+  instance_id = aws_instance.web.id
 }
